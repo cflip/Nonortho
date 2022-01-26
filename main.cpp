@@ -2,9 +2,14 @@
 #include <cmath>
 
 #include "window.h"
+#include "windows.h"
 #include "bitmap.h"
 #include "level.h"
 #include "train.h"
+
+#include "iostream"
+#pragma comment(lib, "winmm.lib") // For audio files
+
 
 struct Point2D {
 	float x, y;
@@ -85,12 +90,15 @@ int main(int argc, char **argv)
 	Level level(32, 32);
 
 	Bitmap bitmap(Width, Height);
+	TrainCar car(0, 0);
+
+	//bool audio_play1 = PlaySound(TEXT("res\\Starliner.wav"), NULL, SND_LOOP | SND_ASYNC);
+	//Adds Starliner.wav and plays it on startup and loops,
+	//I imagine this would get very annoying during debug so it's commented out for now.
 
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;
 	bool isDragging = false;
-
-	TrainCar car(0, 0);
 
 	window.onMouseDown([&](int button, int x, int y) {
 		if (button == 1) {
