@@ -14,7 +14,7 @@ class Level;
 class TrainCar {
 public:
 	TrainCar(int x, int y) 
-		: x(x), y(y), m_sprite("car.png") {}
+		: x(x), y(y), m_sprite("../res/car.png") {}
 
 	void update(Level&);
 	void draw(Bitmap&, int, int);

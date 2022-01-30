@@ -7,4 +7,5 @@ Release/
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-/stb_image.h
+
+build/
