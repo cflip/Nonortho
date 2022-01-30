@@ -22,6 +22,6 @@ public:
 	int x, y;
 private:
 	Bitmap m_sprite;
-	int m_progress;
-	CarDirection m_dir;
+	int m_progress{ 0 };
+	CarDirection m_dir{ North };
 };
