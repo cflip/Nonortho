@@ -1,3 +1,12 @@
+# CMake Output
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+
+third-party/sdl2/sdl2-build/
+third-party/sdl2/sdl2-src/
+third-party/sdl2/sdl2/
+
 # Visual Studio
 Debug/
 Release/
@@ -7,5 +16,7 @@ Release/
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+
+
 
 build/
