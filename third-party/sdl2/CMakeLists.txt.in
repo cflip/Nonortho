@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.0)
+
+project(sdl2 NONE)
+
+include(ExternalProject)
+
+ExternalProject_Add(sdl2
+  URL               https://github.com/libsdl-org/SDL/archive/refs/tags/release-2.0.20.tar.gz
+  SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/sdl2-src"
+  BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/sdl2-build"
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND     ""
+  INSTALL_COMMAND   ""
+  TEST_COMMAND      ""
+)

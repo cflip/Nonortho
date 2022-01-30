@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
 	Window window("Nonortho", Width, Height, Scale);
 
-	Bitmap tiles("tiles.png");
+	Bitmap tiles("../res/tiles.png");
 	Level level(32, 32);
 
 	Bitmap bitmap(Width, Height);
