@@ -3,13 +3,16 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
+#include <iostream>
+
 Bitmap::Bitmap(const char* image)
 {
 	int width, height, bitDepth;
 
 	uint8_t* buffer = stbi_load(image, &width, &height, &bitDepth, STBI_rgb_alpha);
 	if (!buffer) {
-		return;
+		std::cerr << "Failed to read image from " << image << std::endl;
+		exit(1);
 	}
 
 	this->width = width;
