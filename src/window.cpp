@@ -10,7 +10,7 @@ Window::Window(const char* title, int width, int height, int scale)
 	: m_width(width), m_height(height), m_scale(scale)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		fprintf(stderr, "Failed to initalize SDL: %s\n", SDL_GetError());
+		fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
 
