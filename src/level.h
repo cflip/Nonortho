@@ -6,7 +6,7 @@
 
 class Level {
 public:
-	Level(int width, int height);
+	Level(int width, int height, Bitmap& tileSprites);
 	~Level() { delete[] m_tiles; }
 
 	uint8_t get(int x, int y);
@@ -17,7 +17,7 @@ public:
 	void toggleTile(int x, int y);
 
 private:
-	Bitmap m_tileSprites;
+	Bitmap& m_tileSprites;
 	int m_width, m_height;
 	uint8_t* m_tiles;
 };

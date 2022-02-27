@@ -1,8 +1,8 @@
 #include "level.h"
 #include "util.h"
 
-Level::Level(int width, int height)
-	: m_width(width), m_height(height), m_tileSprites("../res/tiles.png")
+Level::Level(int width, int height, Bitmap& tileSprites)
+	: m_width(width), m_height(height), m_tileSprites(tileSprites)
 {
 	m_tiles = new uint8_t[width * height];
 	memset(m_tiles, 0, width * height);
@@ -55,7 +55,7 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 				ty = 3;
 			}
 
-			bitmap.blit(m_tileSprites, xx, yy, tx * 24, ty * 24, TileSize, TileSize);
+			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
 		}
 	}
 }

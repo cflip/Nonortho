@@ -11,13 +11,15 @@ int main(int argc, char** argv)
 	constexpr int Scale = 3;
 
 	Window window("Nonortho", Width, Height, Scale);
+	Bitmap tiles("../res/tiles.png");
 
-	Level level(32, 32);
+	Level level(32, 32, tiles);
 	Bitmap bitmap(Width, Height);
 	Train car(level);
 
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;
+	Point2D hoveredTile = { 0, 0 };
 	bool isDragging = false;
 
 	window.onMouseDown([&](int button, int x, int y) {
@@ -51,6 +53,9 @@ int main(int argc, char** argv)
 			xDrag = x;
 			yDrag = y;
 		}
+		int mx = x / Scale + xOffs;
+		int my = y / Scale + yOffs;
+		hoveredTile = ScreenToTile({ mx, my });
 	});
 
 	while (!window.shouldClose()) {
@@ -60,6 +65,10 @@ int main(int argc, char** argv)
 		level.draw(bitmap, xOffs, yOffs);
 		car.update(level);
 		car.draw(bitmap, xOffs, yOffs);
+
+		int xx = (hoveredTile.x - hoveredTile.y) * (TileSize / 2) - xOffs;
+		int yy = (hoveredTile.x + hoveredTile.y) * (TileSize / 4) - yOffs;
+		bitmap.blit(tiles, xx, yy, 0, TileSize, TileSize, TileSize);
 
 		window.draw(bitmap);
 	}
