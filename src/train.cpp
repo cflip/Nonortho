@@ -1,7 +1,7 @@
 #include "train.h"
 
-#include "level.h"
 #include "bitmap.h"
+#include "level.h"
 
 void Train::update(Level& level)
 {
@@ -25,24 +25,21 @@ void Train::update(Level& level)
 		if (n == SouthEast) m_dir = East;
 		if (n == SouthWest) m_dir = West;
 		y--;
-	}
-	else if (m_dir == East) {
+	} else if (m_dir == East) {
 		if (e == NorthWest) m_dir = North;
 		if (e == SouthWest) m_dir = South;
 		x++;
-	}
-	else if (m_dir == South) {
+	} else if (m_dir == South) {
 		if (s == NorthEast) m_dir = East;
 		if (s == NorthWest) m_dir = West;
 		y++;
-	}
-	else if (m_dir == West) {
+	} else if (m_dir == West) {
 		if (w == NorthEast) m_dir = North;
 		if (w == SouthEast) m_dir = South;
 		x--;
 	}
 
-    nextTile();
+	nextTile();
 }
 
 void Train::draw(Bitmap& bitmap, int xo, int yo)
@@ -56,16 +53,28 @@ void Train::draw(Bitmap& bitmap, int xo, int yo)
 
 void Train::setPosition(int tx, int ty)
 {
-    x = tx;
-    y = ty;
-    m_progress = 0.f;
-    nextTile();
+	x = tx;
+	y = ty;
+	m_progress = 0.f;
+	nextTile();
 }
 
 void Train::nextTile()
 {
-    if (m_dir == North) { m_nextX = x; m_nextY = y - 1; }
-    if (m_dir == East) { m_nextX = x + 1; m_nextY = y; }
-    if (m_dir == South) { m_nextX = x; m_nextY = y + 1; }
-    if (m_dir == West) { m_nextX = x - 1; m_nextY = y; }
+	if (m_dir == North) {
+		m_nextX = x;
+		m_nextY = y - 1;
+	}
+	if (m_dir == East) {
+		m_nextX = x + 1;
+		m_nextY = y;
+	}
+	if (m_dir == South) {
+		m_nextX = x;
+		m_nextY = y + 1;
+	}
+	if (m_dir == West) {
+		m_nextX = x - 1;
+		m_nextY = y;
+	}
 }

@@ -1,10 +1,10 @@
 #define SDL_MAIN_HANDLED
 #include <cmath>
 
-#include "window.h"
 #include "bitmap.h"
 #include "level.h"
 #include "train.h"
+#include "window.h"
 
 struct Point2D {
 	float x, y;
@@ -46,24 +46,19 @@ void DrawLevel(Bitmap& bitmap, Bitmap& tiles, Level& level, int xo, int yo)
 			if (tile == NorthSouth) {
 				tx = 0;
 				ty = 2;
-			}
-			else if (tile == EastWest) {
+			} else if (tile == EastWest) {
 				tx = 1;
 				ty = 2;
-			}
-			else if (tile == SouthEast) {
+			} else if (tile == SouthEast) {
 				tx = 0;
 				ty = 3;
-			}
-			else if (tile == SouthWest) {
+			} else if (tile == SouthWest) {
 				tx = 3;
 				ty = 3;
-			}
-			else if (tile == NorthWest) {
+			} else if (tile == NorthWest) {
 				tx = 1;
 				ty = 3;
-			}
-			else if (tile == NorthEast) {
+			} else if (tile == NorthEast) {
 				tx = 2;
 				ty = 3;
 			}
@@ -73,7 +68,7 @@ void DrawLevel(Bitmap& bitmap, Bitmap& tiles, Level& level, int xo, int yo)
 	}
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	constexpr int Height = 240;
 	constexpr int Width = Height * 16 / 9;
@@ -105,8 +100,10 @@ int main(int argc, char **argv)
 			if (level.inBounds(tilePos.x, tilePos.y)) {
 				auto tile = level.get(tilePos.x, tilePos.y);
 
-				if (tile > 0) tile = 0;
-				else tile = ChooseDirection(level, tilePos.x, tilePos.y);
+				if (tile > 0)
+					tile = 0;
+				else
+					tile = ChooseDirection(level, tilePos.x, tilePos.y);
 
 				level.set(tilePos.x, tilePos.y, tile);
 
@@ -123,12 +120,12 @@ int main(int argc, char **argv)
 			float mx = x / Scale + xOffs;
 			float my = y / Scale + yOffs;
 			auto pos = screenToTile({ mx, my });
-            car.setPosition(pos.x, pos.y);
+			car.setPosition(pos.x, pos.y);
 		}
 	});
 
 	window.onMouseUp([&](int button, int x, int y) {
-		if (button == 2 && isDragging) 
+		if (button == 2 && isDragging)
 			isDragging = false;
 	});
 

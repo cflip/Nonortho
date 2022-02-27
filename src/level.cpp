@@ -18,7 +18,7 @@ uint8_t Level::get(int x, int y)
 
 void Level::set(int x, int y, uint8_t tile)
 {
-	if (inBounds(x, y)) 
+	if (inBounds(x, y))
 		m_tiles[x + y * m_width] = tile;
 }
 
@@ -36,17 +36,13 @@ RailDirection ChooseDirection(Level& level, int x, int y)
 	}
 	if ((e || w) && !(n || s)) {
 		return EastWest;
-	}
-	else if (s && e) {
+	} else if (s && e) {
 		return SouthEast;
-	}
-	else if (s && w) {
+	} else if (s && w) {
 		return SouthWest;
-	}
-	else if (n && w) {
+	} else if (n && w) {
 		return NorthWest;
-	}
-	else if (n && e) {
+	} else if (n && e) {
 		return NorthEast;
 	}
 

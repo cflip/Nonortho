@@ -11,6 +11,7 @@ public:
 	uint8_t get(int x, int y);
 	void set(int x, int y, uint8_t tile);
 	bool inBounds(int x, int y) { return x >= 0 && x < m_width && y >= 0 && y < m_height; }
+
 private:
 	int m_width, m_height;
 	uint8_t* m_tiles;
