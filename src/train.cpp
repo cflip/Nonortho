@@ -9,13 +9,12 @@ void TrainCar::update(Level& level)
 	if (tile == 0)
 		return;
 
-	if (m_progress < 12) {
-		m_progress++;
+	if (m_progress < 1.f) {
+		m_progress += m_speed;
 		return;
 	}
-	else {
-		m_progress = 0;
-	}
+
+	m_progress = 0.f;
 
 	auto n = level.get(x, y - 1);
 	auto e = level.get(x + 1, y);
@@ -42,11 +41,31 @@ void TrainCar::update(Level& level)
 		if (w == SouthEast) m_dir = South;
 		x--;
 	}
+
+    nextTile();
 }
 
 void TrainCar::draw(Bitmap& bitmap, int xo, int yo)
 {
-	int xx = (x - y) * (24 / 2) - xo;
-	int yy = (x + y) * (24 / 4) - yo;
+	float xi = ((float)x + (float)(m_nextX - x) * m_progress) * 24;
+	float yi = ((float)y + (float)(m_nextY - y) * m_progress) * 24;
+	int xx = (int)((xi - yi) / 2.f - (float)xo);
+	int yy = (int)((xi + yi) / 4.f - (float)yo);
 	bitmap.blit(m_sprite, xx, yy, 0, 0, 24, 24);
+}
+
+void TrainCar::setPosition(int tx, int ty)
+{
+    x = tx;
+    y = ty;
+    m_progress = 0.f;
+    nextTile();
+}
+
+void TrainCar::nextTile()
+{
+    if (m_dir == North) { m_nextX = x; m_nextY = y - 1; }
+    if (m_dir == East) { m_nextX = x + 1; m_nextY = y; }
+    if (m_dir == South) { m_nextX = x; m_nextY = y + 1; }
+    if (m_dir == West) { m_nextX = x - 1; m_nextY = y; }
 }

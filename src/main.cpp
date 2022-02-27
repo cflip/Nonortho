@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 	Level level(32, 32);
 
 	Bitmap bitmap(Width, Height);
-	TrainCar car(0, 0);
+	TrainCar car;
 
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;
@@ -123,8 +123,7 @@ int main(int argc, char **argv)
 			float mx = x / Scale + xOffs;
 			float my = y / Scale + yOffs;
 			auto pos = screenToTile({ mx, my });
-			car.x = pos.x;
-			car.y = pos.y;
+            car.setPosition(pos.x, pos.y);
 		}
 	});
 

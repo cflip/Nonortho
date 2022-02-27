@@ -13,15 +13,22 @@ class Level;
 
 class TrainCar {
 public:
-	TrainCar(int x, int y) 
-		: x(x), y(y), m_sprite("../res/car.png") {}
+	TrainCar()
+		: m_sprite("../res/car.png") {}
 
 	void update(Level&);
 	void draw(Bitmap&, int, int);
 
-	int x, y;
+    void setPosition(int x, int y);
 private:
+    void nextTile();
+
 	Bitmap m_sprite;
-	int m_progress{ 0 };
+
+    int x{0}, y{0};
+    float m_speed{0.05f};
+	float m_progress{ 0.f };
+
 	CarDirection m_dir{ North };
+    int m_nextX{0}, m_nextY{0};
 };
