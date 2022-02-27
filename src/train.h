@@ -7,8 +7,8 @@ class Level;
 
 class Train {
 public:
-	Train()
-		: m_sprite("../res/car.png") { }
+	explicit Train(Level& level)
+		: m_sprite("../res/car.png"), m_level(level) { }
 
 	void update(Level&);
 	void draw(Bitmap&, int, int);
@@ -16,9 +16,11 @@ public:
 	void setPosition(int x, int y);
 
 private:
-	void nextTile();
+	void findDirection();
+	void findNextTile();
 
 	Bitmap m_sprite;
+	Level& m_level;
 
 	int x { 0 }, y { 0 };
 	float m_speed { 0.05f };
