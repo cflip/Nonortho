@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 struct Point2D {
 	int x, y;
 };
