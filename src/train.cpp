@@ -23,7 +23,11 @@ void Train::draw(Bitmap& bitmap, int xo, int yo)
 	float yi = ((float)y + (float)(m_nextY - y) * m_progress) * TileSize;
 	int xx = (int)((xi - yi) / 2.f - (float)xo);
 	int yy = (int)((xi + yi) / 4.f - (float)yo);
-	bitmap.blit(m_sprite, xx, yy, 0, 0, TileSize, TileSize);
+
+	int tx = 0;
+	if (m_dir == East || m_dir == West) tx = 24;
+
+	bitmap.blit(m_sprite, xx, yy, tx, 0, TileSize, TileSize);
 }
 
 void Train::setPosition(int tx, int ty)
