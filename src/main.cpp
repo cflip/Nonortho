@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 	Level level(32, 32);
 
 	Bitmap bitmap(Width, Height);
-	TrainCar car;
+	Train car;
 
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;

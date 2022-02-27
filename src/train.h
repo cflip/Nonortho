@@ -11,9 +11,9 @@ enum CarDirection {
 
 class Level;
 
-class TrainCar {
+class Train {
 public:
-	TrainCar()
+	Train()
 		: m_sprite("../res/car.png") {}
 
 	void update(Level&);

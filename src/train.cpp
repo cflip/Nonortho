@@ -3,7 +3,7 @@
 #include "level.h"
 #include "bitmap.h"
 
-void TrainCar::update(Level& level)
+void Train::update(Level& level)
 {
 	auto tile = level.get(x, y);
 	if (tile == 0)
@@ -45,7 +45,7 @@ void TrainCar::update(Level& level)
     nextTile();
 }
 
-void TrainCar::draw(Bitmap& bitmap, int xo, int yo)
+void Train::draw(Bitmap& bitmap, int xo, int yo)
 {
 	float xi = ((float)x + (float)(m_nextX - x) * m_progress) * 24;
 	float yi = ((float)y + (float)(m_nextY - y) * m_progress) * 24;
@@ -54,7 +54,7 @@ void TrainCar::draw(Bitmap& bitmap, int xo, int yo)
 	bitmap.blit(m_sprite, xx, yy, 0, 0, 24, 24);
 }
 
-void TrainCar::setPosition(int tx, int ty)
+void Train::setPosition(int tx, int ty)
 {
     x = tx;
     y = ty;
@@ -62,7 +62,7 @@ void TrainCar::setPosition(int tx, int ty)
     nextTile();
 }
 
-void TrainCar::nextTile()
+void Train::nextTile()
 {
     if (m_dir == North) { m_nextX = x; m_nextY = y - 1; }
     if (m_dir == East) { m_nextX = x + 1; m_nextY = y; }
