@@ -3,6 +3,7 @@ SET(SOURCES
 	level.cpp
 	main.cpp
 	train.cpp
+	util.cpp
 	window.cpp
 )
 

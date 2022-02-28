@@ -1,13 +1,7 @@
 #pragma once
 
 #include "bitmap.h"
-
-enum CarDirection {
-	North,
-	East,
-	South,
-	West
-};
+#include "util.h"
 
 class Level;
 
@@ -30,6 +24,6 @@ private:
 	float m_speed { 0.05f };
 	float m_progress { 0.f };
 
-	CarDirection m_dir { North };
+	Direction m_dir { North };
 	int m_nextX { 0 }, m_nextY { 0 };
 };

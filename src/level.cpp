@@ -1,7 +1,8 @@
 #include "level.h"
+#include "util.h"
 
 Level::Level(int width, int height)
-	: m_width(width), m_height(height)
+	: m_width(width), m_height(height), m_tileSprites("../res/tiles.png")
 {
 	m_tiles = new uint8_t[width * height];
 	memset(m_tiles, 0, width * height);
@@ -20,6 +21,67 @@ void Level::set(int x, int y, uint8_t tile)
 {
 	if (inBounds(x, y))
 		m_tiles[x + y * m_width] = tile;
+}
+
+void Level::draw(Bitmap& bitmap, int xo, int yo)
+{
+	for (int y = 0; y < 32; ++y) {
+		for (int x = 0; x < 32; ++x) {
+			auto tile = get(x, y);
+
+			int xx = (x - y) * (TileSize / 2) - xo;
+			int yy = (x + y) * (TileSize / 4) - yo;
+
+			int tx = (x + y) % 2;
+			int ty = 0;
+
+			if (tile == NorthSouth) {
+				tx = 0;
+				ty = 2;
+			} else if (tile == EastWest) {
+				tx = 1;
+				ty = 2;
+			} else if (tile == SouthEast) {
+				tx = 0;
+				ty = 3;
+			} else if (tile == SouthWest) {
+				tx = 3;
+				ty = 3;
+			} else if (tile == NorthWest) {
+				tx = 1;
+				ty = 3;
+			} else if (tile == NorthEast) {
+				tx = 2;
+				ty = 3;
+			}
+
+			bitmap.blit(m_tileSprites, xx, yy, tx * 24, ty * 24, TileSize, TileSize);
+		}
+	}
+}
+
+void Level::toggleTile(int x, int y)
+{
+	static const auto updateDirection = [&](int xt, int yt) {
+		if (get(xt, yt) > 0)
+			set(xt, yt, ChooseDirection(*this, xt, yt));
+	};
+
+	if (inBounds(x, y)) {
+		auto tile = get(x, y);
+
+		if (tile > 0)
+			tile = 0;
+		else
+			tile = ChooseDirection(*this, x, y);
+
+		m_tiles[x + y * m_width] = tile;
+
+		updateDirection(x - 1, y);
+		updateDirection(x + 1, y);
+		updateDirection(x, y - 1);
+		updateDirection(x, y + 1);
+	}
 }
 
 RailDirection ChooseDirection(Level& level, int x, int y)

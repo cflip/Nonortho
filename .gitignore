@@ -7,16 +7,15 @@ third-party/sdl2/sdl2-build/
 third-party/sdl2/sdl2-src/
 third-party/sdl2/sdl2/
 
-# Visual Studio
+# IDE generated files and folders
 Debug/
 Release/
 .vs/
+.idea/
 
 *.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-
-
 
 build/
