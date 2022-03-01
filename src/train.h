@@ -14,10 +14,15 @@ public:
 	void draw(Bitmap&, int, int);
 
 	void setPosition(int x, int y);
+	// Add a vehicle to the end of this train
+	void addVehicle(Train*);
 
 private:
 	void findDirection();
 	void findNextTile();
+
+	Train* m_next { nullptr };
+	Train* m_prev { nullptr };
 
 	Bitmap m_sprite;
 	Level& m_level;

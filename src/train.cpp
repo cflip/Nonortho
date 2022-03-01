@@ -5,13 +5,27 @@
 
 void Train::update(Level& level)
 {
-	auto tile = level.get(x, y);
-	if (tile == 0)
-		return;
+	if (m_next) {
+		m_speed = m_next->m_speed;
+		m_progress = m_next->m_progress;
+	} else {
+		auto tile = level.get(x, y);
+		if (tile == 0)
+			return;
+	}
 
 	if (m_progress < 1.f) {
 		m_progress += m_speed;
 		return;
+	}
+
+	if (m_next) {
+		x = m_nextX;
+		y = m_nextY;
+		m_nextX = m_next->x;
+		m_nextY = m_next->y;
+		m_progress = 0.f;
+		findDirection();
 	}
 
 	setPosition(m_nextX, m_nextY);
@@ -38,6 +52,16 @@ void Train::setPosition(int tx, int ty)
 	m_progress = 0.f;
 	findDirection();
 	findNextTile();
+}
+
+void Train::addVehicle(Train* newTrain)
+{
+	if (!m_prev) {
+		m_prev = newTrain;
+		newTrain->m_next = this;
+	} else {
+		m_prev->addVehicle(newTrain);
+	}
 }
 
 void Train::findDirection()
