@@ -3,13 +3,13 @@
 #include "bitmap.h"
 #include "level.h"
 
-void Train::update(Level& level)
+void Train::update()
 {
 	if (m_next) {
 		m_speed = m_next->m_speed;
 		m_progress = m_next->m_progress;
 	} else {
-		auto tile = level.get(x, y);
+		auto tile = m_level.get(x, y);
 		if (tile == 0)
 			return;
 	}

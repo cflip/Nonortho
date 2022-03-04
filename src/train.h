@@ -10,7 +10,7 @@ public:
 	explicit Train(Level& level)
 		: m_sprite("../res/car.png"), m_level(level) { }
 
-	void update(Level&);
+	void update();
 	void draw(Bitmap&, int, int);
 
 	void setPosition(int x, int y);
