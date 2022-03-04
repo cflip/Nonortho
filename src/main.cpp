@@ -15,10 +15,14 @@ int main(int argc, char** argv)
 
 	Level level(32, 32, tiles);
 	Bitmap bitmap(Width, Height);
+
 	Train engine(level);
 	Train wagon(level);
 
 	engine.addVehicle(&wagon);
+
+	level.addVehicle(engine);
+	level.addVehicle(wagon);
 
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;
@@ -65,12 +69,8 @@ int main(int argc, char** argv)
 		window.update();
 		bitmap.clear(0xff224466);
 
+		level.update();
 		level.draw(bitmap, xOffs, yOffs);
-		engine.update(level);
-		engine.draw(bitmap, xOffs, yOffs);
-
-		wagon.update(level);
-		wagon.draw(bitmap, xOffs, yOffs);
 
 		int xx = (hoveredTile.x - hoveredTile.y) * (TileSize / 2) - xOffs;
 		int yy = (hoveredTile.x + hoveredTile.y) * (TileSize / 4) - yOffs;

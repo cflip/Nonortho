@@ -1,4 +1,5 @@
 #include "level.h"
+#include "train.h"
 #include "util.h"
 
 Level::Level(int width, int height, Bitmap& tileSprites)
@@ -21,6 +22,13 @@ void Level::set(int x, int y, uint8_t tile)
 {
 	if (inBounds(x, y))
 		m_tiles[x + y * m_width] = tile;
+}
+
+void Level::update()
+{
+	for (Train* vehicle : m_vehicles) {
+		if (vehicle) vehicle->update();
+	}
 }
 
 void Level::draw(Bitmap& bitmap, int xo, int yo)
@@ -58,6 +66,15 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
 		}
 	}
+
+	for (Train* vehicle : m_vehicles) {
+		if (vehicle) vehicle->draw(bitmap, xo, yo);
+	}
+}
+
+void Level::addVehicle(Train& vehicle)
+{
+	m_vehicles.emplace_back(&vehicle);
 }
 
 void Level::toggleTile(int x, int y)
