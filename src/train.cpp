@@ -10,7 +10,7 @@ void Train::update()
 		m_progress = m_next->m_progress;
 	} else {
 		auto tile = m_level.get(x, y);
-		if (tile == 0)
+		if (TILE_TYPE(tile) != TileTrack)
 			return;
 	}
 
@@ -66,24 +66,24 @@ void Train::addVehicle(Train* newTrain)
 
 void Train::findDirection()
 {
-	auto tile = m_level.get(x, y);
+	auto dir = TILE_DATA(m_level.get(x, y));
 
 	if (m_dir == North) {
-		if (tile == SouthEast) m_dir = East;
-		if (tile == SouthWest) m_dir = West;
-		if (tile == EastWest) m_dir = East;
+		if (dir == SouthEast) m_dir = East;
+		if (dir == SouthWest) m_dir = West;
+		if (dir == EastWest) m_dir = East;
 	} else if (m_dir == East) {
-		if (tile == NorthWest) m_dir = North;
-		if (tile == SouthWest) m_dir = South;
-		if (tile == NorthSouth) m_dir = South;
+		if (dir == NorthWest) m_dir = North;
+		if (dir == SouthWest) m_dir = South;
+		if (dir == NorthSouth) m_dir = South;
 	} else if (m_dir == South) {
-		if (tile == NorthEast) m_dir = East;
-		if (tile == NorthWest) m_dir = West;
-		if (tile == EastWest) m_dir = West;
+		if (dir == NorthEast) m_dir = East;
+		if (dir == NorthWest) m_dir = West;
+		if (dir == EastWest) m_dir = West;
 	} else if (m_dir == West) {
-		if (tile == NorthEast) m_dir = North;
-		if (tile == SouthEast) m_dir = South;
-		if (tile == NorthSouth) m_dir = North;
+		if (dir == NorthEast) m_dir = North;
+		if (dir == SouthEast) m_dir = South;
+		if (dir == NorthSouth) m_dir = North;
 	}
 }
 

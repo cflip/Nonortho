@@ -6,16 +6,15 @@ Level::Level(int width, int height, Bitmap& tileSprites)
 	: m_width(width), m_height(height), m_tileSprites(tileSprites)
 {
 	m_tiles = new uint8_t[width * height];
-	memset(m_tiles, 0, width * height);
+	memset(m_tiles, TileGround, width * height);
 }
 
 uint8_t Level::get(int x, int y)
 {
-	if (inBounds(x, y)) {
+	if (inBounds(x, y))
 		return m_tiles[x + y * m_width];
-	} else {
-		return 0;
-	}
+	else
+		return TileGround;
 }
 
 void Level::set(int x, int y, uint8_t tile)
@@ -43,24 +42,27 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 			int tx = (x + y) % 2;
 			int ty = 0;
 
-			if (tile == NorthSouth) {
-				tx = 0;
-				ty = 2;
-			} else if (tile == EastWest) {
-				tx = 1;
-				ty = 2;
-			} else if (tile == SouthEast) {
-				tx = 0;
-				ty = 3;
-			} else if (tile == SouthWest) {
-				tx = 3;
-				ty = 3;
-			} else if (tile == NorthWest) {
-				tx = 1;
-				ty = 3;
-			} else if (tile == NorthEast) {
-				tx = 2;
-				ty = 3;
+			if (TILE_TYPE(tile) == TileTrack) {
+				uint8_t dir = TILE_DATA(tile);
+				if (dir == NorthSouth) {
+					tx = 0;
+					ty = 2;
+				} else if (dir == EastWest) {
+					tx = 1;
+					ty = 2;
+				} else if (dir == SouthEast) {
+					tx = 0;
+					ty = 3;
+				} else if (dir == SouthWest) {
+					tx = 3;
+					ty = 3;
+				} else if (dir == NorthWest) {
+					tx = 1;
+					ty = 3;
+				} else if (dir == NorthEast) {
+					tx = 2;
+					ty = 3;
+				}
 			}
 
 			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
@@ -80,17 +82,17 @@ void Level::addVehicle(Train& vehicle)
 void Level::toggleTile(int x, int y)
 {
 	static const auto updateDirection = [&](int xt, int yt) {
-		if (get(xt, yt) > 0)
-			set(xt, yt, ChooseDirection(*this, xt, yt));
+		if (TILE_TYPE(get(xt, yt)) == TileTrack)
+			set(xt, yt, MAKE_TILE(TileTrack, ChooseDirection(*this, xt, yt)));
 	};
 
 	if (inBounds(x, y)) {
 		auto tile = get(x, y);
 
-		if (tile > 0)
-			tile = 0;
+		if (TILE_TYPE(tile) == TileTrack)
+			tile = TileGround;
 		else
-			tile = ChooseDirection(*this, x, y);
+			tile = MAKE_TILE(TileTrack, ChooseDirection(*this, x, y));
 
 		m_tiles[x + y * m_width] = tile;
 
@@ -101,14 +103,14 @@ void Level::toggleTile(int x, int y)
 	}
 }
 
-RailDirection ChooseDirection(Level& level, int x, int y)
+TrackDirection ChooseDirection(Level& level, int x, int y)
 {
 	if (!level.inBounds(x, y)) return NorthSouth;
 
-	bool n = level.get(x, y - 1) > 0;
-	bool e = level.get(x + 1, y) > 0;
-	bool s = level.get(x, y + 1) > 0;
-	bool w = level.get(x - 1, y) > 0;
+	bool n = TILE_TYPE(level.get(x, y - 1)) == TileTrack;
+	bool e = TILE_TYPE(level.get(x + 1, y)) == TileTrack;
+	bool s = TILE_TYPE(level.get(x, y + 1)) == TileTrack;
+	bool w = TILE_TYPE(level.get(x - 1, y)) == TileTrack;
 
 	if ((n || s) && !(e || w)) {
 		return NorthSouth;

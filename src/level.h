@@ -5,7 +5,25 @@
 #include <cstring>
 #include <vector>
 
+#define TILE_TYPE(x) ((x)&0xf)
+#define TILE_DATA(x) (x >> 4 & 0xf)
+#define MAKE_TILE(t, d) ((((d) & 0xf) << 4) + ((t)&0xf))
+
 class Train;
+
+enum TileType : uint8_t {
+	TileGround,
+	TileTrack
+};
+
+enum TrackDirection : uint8_t {
+	NorthSouth,
+	EastWest,
+	SouthEast,
+	SouthWest,
+	NorthWest,
+	NorthEast,
+};
 
 class Level {
 public:
@@ -30,13 +48,4 @@ private:
 	std::vector<Train*> m_vehicles;
 };
 
-enum RailDirection {
-	NorthSouth = 1,
-	EastWest,
-	SouthEast,
-	SouthWest,
-	NorthWest,
-	NorthEast,
-};
-
-RailDirection ChooseDirection(Level& level, int x, int y);
+TrackDirection ChooseDirection(Level& level, int x, int y);
