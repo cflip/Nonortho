@@ -38,13 +38,16 @@ void Window::update()
 			m_isRunning = false;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			m_mouseDown(event.button.button, event.button.x, event.button.y);
+			if (m_mouseDown)
+				m_mouseDown(event.button.button, event.button.x, event.button.y);
 			break;
 		case SDL_MOUSEMOTION:
-			m_mouseMove(event.button.x, event.button.y);
+			if (m_mouseMove)
+				m_mouseMove(event.button.x, event.button.y);
 			break;
 		case SDL_MOUSEBUTTONUP:
-			m_mouseUp(event.button.button, event.button.x, event.button.y);
+			if (m_mouseUp)
+				m_mouseUp(event.button.button, event.button.x, event.button.y);
 			break;
 		}
 	}
@@ -56,7 +59,7 @@ void Window::update()
 void Window::draw(Bitmap& bitmap)
 {
 	SDL_RenderClear(m_renderer);
-	SDL_UpdateTexture(m_texture, NULL, bitmap.data, m_width * 4);
-	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+	SDL_UpdateTexture(m_texture, nullptr, bitmap.data, m_width * 4);
+	SDL_RenderCopy(m_renderer, m_texture, nullptr, nullptr);
 	SDL_RenderPresent(m_renderer);
 }

@@ -16,7 +16,7 @@ public:
 	void update();
 	void draw(Bitmap&);
 
-	bool shouldClose() { return !m_isRunning; }
+	bool shouldClose() const { return !m_isRunning; }
 
 	void onMouseDown(std::function<void(int, int, int)> callback) { m_mouseDown = callback; }
 	void onMouseUp(std::function<void(int, int, int)> callback) { m_mouseUp = callback; }
