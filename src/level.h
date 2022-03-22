@@ -41,6 +41,8 @@ public:
 	void addVehicle(Train&);
 	void toggleTile(int x, int y);
 
+	void save() const;
+	void load();
 private:
 	Bitmap& m_tileSprites;
 	int m_width, m_height;

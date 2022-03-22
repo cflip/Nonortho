@@ -65,6 +65,15 @@ int main(int argc, char** argv)
 		hoveredTile = ScreenToTile({ mx, my });
 	});
 
+	window.onKeyDown([&](int keycode) {
+		if (keycode == 's') {
+			level.save();
+		}
+		if (keycode == 'l') {
+			level.load();
+		}
+	});
+
 	while (!window.shouldClose()) {
 		window.update();
 		bitmap.clear(0xff224466);

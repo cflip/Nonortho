@@ -1,4 +1,8 @@
 #include "level.h"
+
+#include <fstream>
+#include <iostream>
+
 #include "train.h"
 #include "util.h"
 
@@ -114,6 +118,46 @@ void Level::toggleTile(int x, int y)
 		updateDirection(x, y - 1);
 		updateDirection(x, y + 1);
 	}
+}
+
+static const char* DEFAULT_FILENAME = "level.non";
+
+void Level::save() const
+{
+	std::ofstream outputStream(DEFAULT_FILENAME, std::ios::out | std::ios::binary);
+	if (!outputStream) {
+		std::cerr << "Failed to write level to " << DEFAULT_FILENAME << '\n';
+		return;
+	}
+
+	outputStream.write((char*)&m_width, 1);
+	outputStream.write((char*)&m_height, 1);
+	outputStream.write((char*)m_tiles, m_width * m_height);
+	outputStream.close();
+
+	std::cout << "Successfully saved level to " << DEFAULT_FILENAME << '\n';
+}
+
+void Level::load()
+{
+	std::ifstream inputStream(DEFAULT_FILENAME, std::ios::in | std::ios::binary);
+	if (!inputStream) {
+		std::cerr << "Failed to read level from " << DEFAULT_FILENAME << '\n';
+		return;
+	}
+
+	uint8_t width, height;
+	inputStream.read((char*)&width, 1);
+	inputStream.read((char*)&height, 1);
+
+	int size = width * height;
+	inputStream.read((char*)m_tiles, size);
+	inputStream.close();
+
+	m_width = width;
+	m_height = height;
+
+	printf("Successfully loaded %dx%d level from %s\n", width, height, DEFAULT_FILENAME);
 }
 
 TrackDirection ChooseDirection(Level& level, int x, int y)
