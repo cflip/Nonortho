@@ -7,12 +7,13 @@
 
 #define TILE_TYPE(x) ((x)&0xf)
 #define TILE_DATA(x) (x >> 4 & 0xf)
-#define MAKE_TILE(t, d) ((((d) & 0xf) << 4) + ((t)&0xf))
+#define MAKE_TILE(t, d) ((((d)&0xf) << 4) + ((t)&0xf))
 
 class Train;
 
 enum TileType : uint8_t {
 	TileGround,
+	TileWall,
 	TileTrack
 };
 

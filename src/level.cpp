@@ -7,6 +7,9 @@ Level::Level(int width, int height, Bitmap& tileSprites)
 {
 	m_tiles = new uint8_t[width * height];
 	memset(m_tiles, TileGround, width * height);
+
+	for (int i = 4; i < 14; i++)
+		m_tiles[i + 6 * m_width] = TileWall;
 }
 
 uint8_t Level::get(int x, int y)
@@ -32,17 +35,26 @@ void Level::update()
 
 void Level::draw(Bitmap& bitmap, int xo, int yo)
 {
-	for (int y = 0; y < 32; ++y) {
-		for (int x = 0; x < 32; ++x) {
+	for (int y = 0; y < m_height; ++y) {
+		for (int x = 0; x < m_width; ++x) {
 			auto tile = get(x, y);
 
 			int xx = (x - y) * (TileSize / 2) - xo;
 			int yy = (x + y) * (TileSize / 4) - yo;
 
-			int tx = (x + y) % 2;
-			int ty = 0;
+			int tx = 0;
+			int ty = 1;
 
-			if (TILE_TYPE(tile) == TileTrack) {
+			switch (TILE_TYPE(tile)) {
+			case TileGround:
+				tx = (x + y) % 2;
+				ty = 0;
+				break;
+			case TileWall:
+				tx = 2;
+				ty = 0;
+				break;
+			case TileTrack: {
 				uint8_t dir = TILE_DATA(tile);
 				if (dir == NorthSouth) {
 					tx = 0;
@@ -63,6 +75,7 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 					tx = 2;
 					ty = 3;
 				}
+			} break;
 			}
 
 			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
