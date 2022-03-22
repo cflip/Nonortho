@@ -1,5 +1,5 @@
 # Nonortho
-[Nonortho](https://cflip.net/projects/nonortho.html) is a WIP transport tycoon style isometric tile game.
+[Nonortho](https://cflip.net/projects/nonortho/) is a WIP transport tycoon style isometric tile game.
 
 ## Build Instructions
 First, clone the repository and use CMake to generate project files for your system.
