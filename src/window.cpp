@@ -49,6 +49,14 @@ void Window::update()
 			if (m_mouseUp)
 				m_mouseUp(event.button.button, event.button.x, event.button.y);
 			break;
+		case SDL_KEYDOWN:
+			if (m_keyDown)
+				m_keyDown(event.key.keysym.sym);
+			break;
+		case SDL_KEYUP:
+			if (m_keyUp)
+				m_keyUp(event.key.keysym.sym);
+			break;
 		}
 	}
 
