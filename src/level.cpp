@@ -150,8 +150,14 @@ void Level::load()
 	inputStream.read((char*)&width, 1);
 	inputStream.read((char*)&height, 1);
 
-	int size = width * height;
-	inputStream.read((char*)m_tiles, size);
+	int oldSize = m_width * m_height;
+	int newSize = width * height;
+	if (oldSize != newSize) {
+		delete[] m_tiles;
+		m_tiles = new uint8_t[newSize];
+	}
+
+	inputStream.read((char*)m_tiles, newSize);
 	inputStream.close();
 
 	m_width = width;
