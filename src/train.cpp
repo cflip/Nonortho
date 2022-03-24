@@ -3,6 +3,8 @@
 #include "bitmap.h"
 #include "level.h"
 
+static const Bitmap SPRITES("res/car.png");
+
 void Train::update()
 {
 	if (m_next) {
@@ -42,7 +44,7 @@ void Train::draw(Bitmap& bitmap, int xo, int yo)
 	int tx = 0;
 	if (m_dir == East || m_dir == West) tx = 24;
 
-	bitmap.blit(m_sprite, xx, yy, tx, 0, TileSize, TileSize);
+	bitmap.blit(SPRITES, xx, yy, tx, 0, TileSize, TileSize);
 }
 
 void Train::setPosition(int tx, int ty)
