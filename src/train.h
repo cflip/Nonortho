@@ -8,7 +8,7 @@ class Level;
 class Train {
 public:
 	explicit Train(Level& level)
-		: m_sprite("../res/car.png"), m_level(level) { }
+		: m_sprite("res/car.png"), m_level(level) { }
 
 	void update();
 	void draw(Bitmap&, int, int);

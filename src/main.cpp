@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 	constexpr int Scale = 3;
 
 	Window window("Nonortho", Width, Height, Scale);
-	Bitmap tiles("../res/tiles.png");
+	Bitmap tiles("res/tiles.png");
 
 	Level level(32, 32, tiles);
 	Bitmap bitmap(Width, Height);

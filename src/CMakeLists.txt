@@ -23,3 +23,9 @@ target_link_libraries(
 	PRIVATE
 	SDL2::SDL2
 )
+
+add_custom_command(
+	TARGET Nonortho POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/res $<TARGET_FILE_DIR:Nonortho>/res
+	COMMENT "Copying resources" VERBATIM
+)
