@@ -38,7 +38,7 @@ public:
 	void update();
 	void draw(Bitmap& bitmap, int xo, int yo);
 
-	void addVehicle(Train&);
+	Train* addVehicle();
 	void toggleTile(int x, int y);
 
 	void save() const;
@@ -48,7 +48,7 @@ private:
 	int m_width, m_height;
 	uint8_t* m_tiles;
 
-	std::vector<Train*> m_vehicles;
+	std::vector<Train> m_vehicles;
 };
 
 TrackDirection ChooseDirection(Level& level, int x, int y);

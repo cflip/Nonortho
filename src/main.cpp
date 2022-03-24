@@ -18,14 +18,6 @@ int main(int argc, char** argv)
 	Level level(32, 32, tiles);
 	Bitmap bitmap(Width, Height);
 
-	Train engine(level);
-	Train wagon(level);
-
-	engine.addVehicle(&wagon);
-
-	level.addVehicle(engine);
-	level.addVehicle(wagon);
-
 	int xOffs = 0, yOffs = 0;
 	int xDrag, yDrag;
 	Point2D hoveredTile = { 0, 0 };
@@ -53,8 +45,10 @@ int main(int argc, char** argv)
 			int mx = x / Scale + xOffs;
 			int my = y / Scale + yOffs;
 			auto pos = ScreenToTile({ mx, my });
-			engine.setPosition(pos.x, pos.y);
-			engine.setSpeed(0.2f);
+
+			Train* train = level.addVehicle();
+			train->setPosition(pos.x, pos.y);
+			train->setSpeed(0.2f);
 		}
 	});
 

@@ -32,8 +32,8 @@ void Level::set(int x, int y, uint8_t tile)
 
 void Level::update()
 {
-	for (Train* vehicle : m_vehicles) {
-		if (vehicle) vehicle->update();
+	for (auto& vehicle : m_vehicles) {
+		vehicle.update();
 	}
 }
 
@@ -68,14 +68,14 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 		}
 	}
 
-	for (Train* vehicle : m_vehicles) {
-		if (vehicle) vehicle->draw(bitmap, xo, yo);
+	for (auto& vehicle : m_vehicles) {
+		vehicle.draw(bitmap, xo, yo);
 	}
 }
 
-void Level::addVehicle(Train& vehicle)
+Train* Level::addVehicle()
 {
-	m_vehicles.emplace_back(&vehicle);
+	return &m_vehicles.emplace_back(*this);
 }
 
 void Level::toggleTile(int x, int y)
