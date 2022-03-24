@@ -130,6 +130,12 @@ void Level::save() const
 		return;
 	}
 
+	if (m_width > 255 || m_height > 255) {
+		std::cerr << "Failed to save level!\n"
+				  << "Level save format does not allow widths or heights greater than 255\n";
+		return;
+	}
+
 	outputStream.write((char*)&m_width, 1);
 	outputStream.write((char*)&m_height, 1);
 	outputStream.write((char*)m_tiles, m_width * m_height);
