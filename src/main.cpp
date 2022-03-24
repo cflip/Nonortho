@@ -4,6 +4,8 @@
 #include "util.h"
 #include "window.h"
 
+#include <SDL_keycode.h>
+
 int main(int argc, char** argv)
 {
 	constexpr int Height = 240;
@@ -28,6 +30,13 @@ int main(int argc, char** argv)
 	int xDrag, yDrag;
 	Point2D hoveredTile = { 0, 0 };
 	bool isDragging = false;
+
+	bool up = false;
+	bool down = false;
+	bool left = false;
+	bool right = false;
+
+	const int cameraMoveSpeed = 3;
 
 	window.onMouseDown([&](int button, int x, int y) {
 		if (button == 1) {
@@ -66,17 +75,53 @@ int main(int argc, char** argv)
 	});
 
 	window.onKeyDown([&](int keycode) {
-		if (keycode == 's') {
+		switch (keycode) {
+		case SDLK_UP:
+			up = true;
+			break;
+		case SDLK_DOWN:
+			down = true;
+			break;
+		case SDLK_LEFT:
+			left = true;
+			break;
+		case SDLK_RIGHT:
+			right = true;
+			break;
+		case 's':
 			level.save();
-		}
-		if (keycode == 'l') {
+			break;
+		case 'l':
 			level.load();
+			break;
+		}
+	});
+
+	window.onKeyUp([&](int keycode) {
+		switch (keycode) {
+		case SDLK_UP:
+			up = false;
+			break;
+		case SDLK_DOWN:
+			down = false;
+			break;
+		case SDLK_LEFT:
+			left = false;
+			break;
+		case SDLK_RIGHT:
+			right = false;
+			break;
 		}
 	});
 
 	while (!window.shouldClose()) {
 		window.update();
 		bitmap.clear(0xff224466);
+
+		if (up) yOffs -= cameraMoveSpeed;
+		if (down) yOffs += cameraMoveSpeed;
+		if (left) xOffs -= cameraMoveSpeed;
+		if (right) xOffs += cameraMoveSpeed;
 
 		level.update();
 		level.draw(bitmap, xOffs, yOffs);
