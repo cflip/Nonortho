@@ -58,28 +58,10 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 				tx = 2;
 				ty = 0;
 				break;
-			case TileTrack: {
-				uint8_t dir = TILE_DATA(tile);
-				if (dir == NorthSouth) {
-					tx = 0;
-					ty = 2;
-				} else if (dir == EastWest) {
-					tx = 1;
-					ty = 2;
-				} else if (dir == SouthEast) {
-					tx = 0;
-					ty = 3;
-				} else if (dir == SouthWest) {
-					tx = 3;
-					ty = 3;
-				} else if (dir == NorthWest) {
-					tx = 1;
-					ty = 3;
-				} else if (dir == NorthEast) {
-					tx = 2;
-					ty = 3;
-				}
-			} break;
+			case TileTrack:
+				tx = TILE_DATA(tile);
+				ty = 2;
+				break;
 			}
 
 			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
