@@ -14,6 +14,7 @@ public:
 	void draw(Bitmap&, int, int);
 
 	void setPosition(int x, int y);
+	void setSpeed(float speed) { m_speed = speed; };
 	// Add a vehicle to the end of this train
 	void addVehicle(Train*);
 
@@ -28,7 +29,8 @@ private:
 	Level& m_level;
 
 	int x { 0 }, y { 0 };
-	float m_speed { 0.05f };
+	float m_speed { 0.f };
+	float m_acceleration { 0.98f };
 	float m_progress { 0.f };
 
 	Direction m_dir { North };

@@ -54,6 +54,7 @@ int main(int argc, char** argv)
 			int my = y / Scale + yOffs;
 			auto pos = ScreenToTile({ mx, my });
 			engine.setPosition(pos.x, pos.y);
+			engine.setSpeed(0.2f);
 		}
 	});
 

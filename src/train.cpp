@@ -14,6 +14,7 @@ void Train::update()
 			return;
 	}
 
+	m_speed *= m_acceleration;
 	if (m_progress < 1.f) {
 		m_progress += m_speed;
 		return;
@@ -48,8 +49,8 @@ void Train::setPosition(int tx, int ty)
 {
 	x = tx;
 	y = ty;
-
 	m_progress = 0.f;
+
 	findDirection();
 	findNextTile();
 }
