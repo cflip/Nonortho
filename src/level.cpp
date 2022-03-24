@@ -103,6 +103,8 @@ void Level::toggleTile(int x, int y)
 }
 
 static const char* DEFAULT_FILENAME = "level.non";
+static const char* LEVEL_HEADER = "NON";
+static const int LEVEL_HEADER_SIZE = 3;
 
 void Level::save() const
 {
@@ -118,6 +120,8 @@ void Level::save() const
 		return;
 	}
 
+	outputStream.write(LEVEL_HEADER, LEVEL_HEADER_SIZE);
+
 	outputStream.write((char*)&m_width, 1);
 	outputStream.write((char*)&m_height, 1);
 	outputStream.write((char*)m_tiles, m_width * m_height);
@@ -131,6 +135,14 @@ void Level::load()
 	std::ifstream inputStream(DEFAULT_FILENAME, std::ios::in | std::ios::binary);
 	if (!inputStream) {
 		std::cerr << "Failed to read level from " << DEFAULT_FILENAME << '\n';
+		return;
+	}
+
+	char header[LEVEL_HEADER_SIZE];
+	inputStream.read(header, LEVEL_HEADER_SIZE);
+
+	if (strncmp(header, LEVEL_HEADER, LEVEL_HEADER_SIZE) != 0) {
+		std::cerr << "Level loaded from " << DEFAULT_FILENAME << " does not match expected header!\n";
 		return;
 	}
 
