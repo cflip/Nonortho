@@ -37,39 +37,61 @@ void Level::update()
 	}
 }
 
+static Point2D GetSpriteForTile(uint8_t tile, int x, int y)
+{
+	Point2D result = { 0, 1 };
+	switch (TILE_TYPE(tile)) {
+	case TileGround:
+		result.x = (x + y) % 2;
+		result.y = 0;
+		break;
+	case TileWall:
+		result.x = 2;
+		result.y = 0;
+		break;
+	case TileTrack:
+		result.x = TILE_DATA(tile);
+		result.y = 2;
+		break;
+	}
+	return result;
+}
+
 void Level::draw(Bitmap& bitmap, int xo, int yo)
 {
 	for (int y = 0; y < m_height; ++y) {
 		for (int x = 0; x < m_width; ++x) {
 			auto tile = get(x, y);
+			if (TILE_TYPE(tile) == TileWall)
+				continue;
 
 			int xx = (x - y) * (TileSize / 2) - xo;
 			int yy = (x + y) * (TileSize / 4) - yo;
 
-			int tx = 0;
-			int ty = 1;
-
-			switch (TILE_TYPE(tile)) {
-			case TileGround:
-				tx = (x + y) % 2;
-				ty = 0;
-				break;
-			case TileWall:
-				tx = 2;
-				ty = 0;
-				break;
-			case TileTrack:
-				tx = TILE_DATA(tile);
-				ty = 2;
-				break;
-			}
-
-			bitmap.blit(m_tileSprites, xx, yy, tx * TileSize, ty * TileSize, TileSize, TileSize);
+			Point2D textureIndex = GetSpriteForTile(tile, x, y);
+			bitmap.blit(m_tileSprites, xx, yy, textureIndex.x * TileSize, textureIndex.y * TileSize, TileSize, TileSize);
 		}
 	}
 
-	for (auto& vehicle : m_vehicles) {
-		vehicle.draw(bitmap, xo, yo);
+	for (int y = 0; y < m_height; ++y) {
+		for (int x = 0; x < m_width; ++x) {
+			auto vehiclesInTile = std::find_if(m_vehicles.begin(), m_vehicles.end(), [x, y](const auto& vehicle) {
+				return vehicle.getSpritePosition().x == x && vehicle.getSpritePosition().y == y;
+			});
+
+			while (vehiclesInTile != m_vehicles.end()) {
+				vehiclesInTile->draw(bitmap, xo, yo);
+				++vehiclesInTile;
+			}
+
+			auto tile = get(x, y);
+			if (TILE_TYPE(tile) == TileWall) {
+				int xx = (x - y) * (TileSize / 2) - xo;
+				int yy = (x + y) * (TileSize / 4) - yo;
+				Point2D textureIndex = GetSpriteForTile(tile, x, y);
+				bitmap.blit(m_tileSprites, xx, yy, textureIndex.x * TileSize, textureIndex.y * TileSize, TileSize, TileSize);
+			}
+		}
 	}
 }
 

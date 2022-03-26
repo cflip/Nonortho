@@ -14,6 +14,7 @@ public:
 	void draw(Bitmap&, int, int);
 
 	void setPosition(int x, int y);
+	Point2D getSpritePosition() const;
 	void setSpeed(float speed) { m_speed = speed; };
 	// Add a vehicle to the end of this train
 	void addVehicle(Train*);

@@ -57,6 +57,13 @@ void Train::setPosition(int tx, int ty)
 	findNextTile();
 }
 
+Point2D Train::getSpritePosition() const
+{
+	int xi = ceil((float)x + (float)(m_nextX - x) * m_progress);
+	int yi = ceil((float)y + (float)(m_nextY - y) * m_progress);
+	return { xi, yi };
+}
+
 void Train::addVehicle(Train* newTrain)
 {
 	if (!m_prev) {
