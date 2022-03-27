@@ -7,6 +7,7 @@ It is recommended that you create a ``build`` directory for CMake to generate bu
 ```sh
 git clone https://github.com/cflip/Nonortho
 cd Nonortho
+git submodule update
 mkdir build && cd build
 cmake ../
 ```
