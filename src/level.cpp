@@ -1,5 +1,6 @@
 #include "level.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 

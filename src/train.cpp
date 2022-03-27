@@ -1,5 +1,7 @@
 #include "train.h"
 
+#include <cmath>
+
 #include "bitmap.h"
 #include "level.h"
 
