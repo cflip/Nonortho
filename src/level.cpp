@@ -76,13 +76,14 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 
 	for (int y = 0; y < m_height; ++y) {
 		for (int x = 0; x < m_width; ++x) {
-			auto vehiclesInTile = std::find_if(m_vehicles.begin(), m_vehicles.end(), [x, y](const auto& vehicle) {
+			auto isInTile = [x, y](const auto& vehicle) {
 				return vehicle.getSpritePosition().x == x && vehicle.getSpritePosition().y == y;
-			});
+			};
 
+			auto vehiclesInTile = std::find_if(m_vehicles.begin(), m_vehicles.end(), isInTile);
 			while (vehiclesInTile != m_vehicles.end()) {
 				vehiclesInTile->draw(bitmap, xo, yo);
-				++vehiclesInTile;
+				vehiclesInTile = std::find_if(++vehiclesInTile, m_vehicles.end(), isInTile);
 			}
 
 			auto tile = get(x, y);
