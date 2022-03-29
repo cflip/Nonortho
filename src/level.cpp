@@ -96,9 +96,9 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 	}
 }
 
-Train* Level::addVehicle()
+Train& Level::addVehicle()
 {
-	return &m_vehicles.emplace_back(*this);
+	return m_vehicles.emplace_back(*this);
 }
 
 void Level::toggleTile(int x, int y)

@@ -38,7 +38,7 @@ public:
 	void update();
 	void draw(Bitmap& bitmap, int xo, int yo);
 
-	Train* addVehicle();
+	Train& addVehicle();
 	void toggleTile(int x, int y);
 
 	void save() const;

@@ -46,9 +46,9 @@ int main(int argc, char** argv)
 			int my = y / Scale + yOffs;
 			auto pos = ScreenToTile({ mx, my });
 
-			Train* train = level.addVehicle();
-			train->setPosition(pos.x, pos.y);
-			train->setSpeed(0.2f);
+			Train& train = level.addVehicle();
+			train.setPosition(pos.x, pos.y);
+			train.setSpeed(0.2f);
 		}
 	});
 
