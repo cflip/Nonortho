@@ -1,6 +1,7 @@
 #include "level.h"
 
 #include <algorithm>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 
@@ -33,8 +34,8 @@ void Level::set(int x, int y, uint8_t tile)
 
 void Level::update()
 {
-	for (auto& vehicle : m_vehicles) {
-		vehicle.update();
+	for (const auto& vehicle : m_vehicles) {
+		vehicle->update();
 	}
 }
 
@@ -77,12 +78,12 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 	for (int y = 0; y < m_height; ++y) {
 		for (int x = 0; x < m_width; ++x) {
 			auto isInTile = [x, y](const auto& vehicle) {
-				return vehicle.getSpritePosition().x == x && vehicle.getSpritePosition().y == y;
+				return vehicle->getSpritePosition().x == x && vehicle->getSpritePosition().y == y;
 			};
 
 			auto vehiclesInTile = std::find_if(m_vehicles.begin(), m_vehicles.end(), isInTile);
 			while (vehiclesInTile != m_vehicles.end()) {
-				vehiclesInTile->draw(bitmap, xo, yo);
+				vehiclesInTile->get()->draw(bitmap, xo, yo);
 				vehiclesInTile = std::find_if(++vehiclesInTile, m_vehicles.end(), isInTile);
 			}
 
@@ -97,9 +98,11 @@ void Level::draw(Bitmap& bitmap, int xo, int yo)
 	}
 }
 
-Train& Level::addVehicle()
+void Level::addVehicle(int x, int y)
 {
-	return m_vehicles.emplace_back(*this);
+	auto& ptr = m_vehicles.emplace_back(std::make_unique<Train>(*this));
+	ptr->setPosition(x, y);
+	ptr->setSpeed(0.2f);
 }
 
 void Level::toggleTile(int x, int y)

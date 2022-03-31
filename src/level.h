@@ -1,9 +1,10 @@
 #pragma once
 
-#include "bitmap.h"
 #include <cstdint>
-#include <cstring>
+#include <memory>
 #include <vector>
+
+#include "bitmap.h"
 
 #define TILE_TYPE(x) ((x)&0xf)
 #define TILE_DATA(x) (x >> 4 & 0xf)
@@ -38,17 +39,18 @@ public:
 	void update();
 	void draw(Bitmap& bitmap, int xo, int yo);
 
-	Train& addVehicle();
+	void addVehicle(int x, int y);
 	void toggleTile(int x, int y);
 
 	void save() const;
 	void load();
+
 private:
 	Bitmap& m_tileSprites;
 	int m_width, m_height;
 	uint8_t* m_tiles;
 
-	std::vector<Train> m_vehicles;
+	std::vector<std::unique_ptr<Train>> m_vehicles;
 };
 
 TrackDirection ChooseDirection(Level& level, int x, int y);
