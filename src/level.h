@@ -36,7 +36,7 @@ public:
 	void set(int x, int y, uint8_t tile);
 	bool inBounds(int x, int y) const { return x >= 0 && x < m_width && y >= 0 && y < m_height; }
 
-	void update();
+	void update(float deltaTime);
 	void draw(Bitmap& bitmap, int xo, int yo);
 
 	void addVehicle(int x, int y);

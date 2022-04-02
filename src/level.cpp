@@ -32,10 +32,10 @@ void Level::set(int x, int y, uint8_t tile)
 		m_tiles[x + y * m_width] = tile;
 }
 
-void Level::update()
+void Level::update(float deltaTime)
 {
 	for (const auto& vehicle : m_vehicles) {
-		vehicle->update();
+		vehicle->update(deltaTime);
 	}
 }
 

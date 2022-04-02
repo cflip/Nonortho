@@ -10,7 +10,7 @@ public:
 	explicit Train(Level& level)
 		: m_level(level) { }
 
-	void update();
+	void update(float deltaTime);
 	void draw(Bitmap&, int, int);
 
 	void setPosition(int x, int y);

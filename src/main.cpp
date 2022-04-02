@@ -5,6 +5,7 @@
 #include "window.h"
 
 #include <SDL_keycode.h>
+#include <chrono>
 
 int main(int argc, char** argv)
 {
@@ -107,7 +108,12 @@ int main(int argc, char** argv)
 		}
 	});
 
+	auto lastTime = std::chrono::high_resolution_clock::now();
 	while (!window.shouldClose()) {
+		auto now = std::chrono::high_resolution_clock::now();
+		float deltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(now - lastTime).count() * 100;
+		lastTime = now;
+
 		window.update();
 		bitmap.clear(0xff224466);
 
@@ -116,7 +122,7 @@ int main(int argc, char** argv)
 		if (left) xOffs -= cameraMoveSpeed;
 		if (right) xOffs += cameraMoveSpeed;
 
-		level.update();
+		level.update(deltaTime);
 		level.draw(bitmap, xOffs, yOffs);
 
 		int xx = (hoveredTile.x - hoveredTile.y) * (TileSize / 2) - xOffs;

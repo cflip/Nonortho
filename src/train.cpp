@@ -7,7 +7,7 @@
 
 static const Bitmap SPRITES("res/car.png");
 
-void Train::update()
+void Train::update(float deltaTime)
 {
 	if (m_next) {
 		m_speed = m_next->m_speed;
@@ -20,7 +20,7 @@ void Train::update()
 
 	m_speed *= m_acceleration;
 	if (m_progress < 1.f) {
-		m_progress += m_speed;
+		m_progress += m_speed * deltaTime;
 		return;
 	}
 
